@@ -1,0 +1,33 @@
+{% extends "app/login_layout.html" %}
+
+{% block body %}
+    <h3 class="text-center text-white pt-5">Register Form</h3>
+    <form id="login-form" class="form" action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="password" class="tinfo">Email:</label><br>
+            <input type="text" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="username" class="tinfo">Username:</label><br>
+            <input type="text" name="username" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="password" class="tinfo">Password:</label><br>
+            <input type="password" name="password" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="password" class="tinfo">Confirm Password:</label><br>
+            <input type="password" name="password2" class="form-control">
+        </div>
+        <label class="tinfo text-left">{{ message }}</label>
+        <div class="form-group">
+            <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+        </div>
+        </br>
+        <div id="register-link" class="text-right">
+            <a href="{% url 'login' %}" class="tinfo">Login here</a>
+        </div>
+    </form>
+{% endblock %}  

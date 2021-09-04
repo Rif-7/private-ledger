@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{% static 'app/app.js' %}"></script>
+        <title>Spent More!</title>
+        <link href="{% static 'app/styles.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">{{ user }}</a>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="new-trans" href="#">New Transaction</a>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Sort
+                      </button>
+                </li>
+                
+            </ul>
+        </nav>
+        
+
+        <!-- MODAL -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Sort</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                  <div class="modal-body">
+                    <form>
+
+                        <p class="modal-text">Categorie:</p>
+                        <input type="text" placeholder="',' seperated" name="categorie" id="categorie">
+
+                        <p class="modal-text">Amount:</p>
+                        <input type="integer" placeholder="Min Value" name="min">
+                        <input type="integer" placeholder="Max Value" name="max">
+
+                        <p class="modal-text">Date:</p>
+                        <input type="integer" placeholder="dd/mm/yyyy (after)" name="after">
+                        <input type="integer" placeholder="dd/mm/yyyy (before)" name="before">
+                    </form>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="close-btn" data-dismiss="modal">Close</button>
+                    <button type="button" id="sort-btn" class="btn btn-primary">Search</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+        <div id="container-main">
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Categorie</th>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+                <th scope="col">To</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody id="table-data">
+
+            </tbody>
+          </table>
+
+        </div>
+
+        <div id="new-transactions">
+          <form method="post" id="trans-form" action="{% url 'add' %}">
+            {% csrf_token %}
+            <p class="form-data">Categorie:</p>
+            <input class="form-data" name="cat" list="cats" type="text">
+            <datalist id="cats">
+              {% for cat in cats %}
+              <option value="{{ cat }}">
+              {% endfor %}
+            </datalist>
+
+
+            <p class="form-data">Description:</p>
+            <textarea name="description" cols="40" class="form-data" rows="2"></textarea>
+            <p class="form-data">Amount:</p>
+            <input class="form-data" name="amount" type="number">
+            <p class="form-data">To:</p>
+            <input class="form-data" name="to" type="text">
+            </br>
+            
+          </form>
+            <input class="btn btn-primary form-btn form-data" form="trans-form" id="submit-btn" type="submit">
+            <button class="btn btn-primary form-btn" id="cancel-btn">Cancel</button>
+        </div>
+
+    </body>
+
+
+</html>

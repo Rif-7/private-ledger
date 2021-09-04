@@ -1,0 +1,52 @@
+body {
+  background-color: #212529;
+}
+
+#login-body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+  }
+  #login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+  }
+
+.tinfo {
+      font-size: larger;
+      color: white;
+    
+  }
+
+.modal-header, .modal-footer {
+  background-color: #1C1E1F;
+}
+
+.modal-title, .close, .modal-text {
+  color: #D1CDC7;
+  margin-bottom: 0px;
+}
+
+.modal-body {
+  background-color: #35393B;
+}
+
+#new-transactions {
+  display: none;
+  text-align: center;
+ 
+}
+
+p {
+  color: white;
+  margin-bottom: 3px;
+}
+
+.form-btn {
+  margin: 5px;
+}
