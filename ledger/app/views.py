@@ -78,7 +78,9 @@ def get_data(request):
         cat = request.POST.get("categorie", False)
         print(cat)
         if cat:
-            transactions = transactions.filter(cat=cat.capitalize())
+            cat = "".join(cat.split(" "))
+            cat = [c.capitalize() for c in cat.split(",")]
+            transactions = transactions.filter(cat__in=cat)
         p_min = request.POST.get("min", False)
         if p_min:
             transactions = transactions.filter(amount__gte=p_min)
@@ -90,10 +92,12 @@ def get_data(request):
         before = request.POST.get("before", False)
         if before:
             before = datetime.strptime(before, "%d/%m/%Y")
+            print(before)
             transactions = transactions.filter(date__lte=before)
 
         after = request.POST.get("after", False)
         if after:
+            print(after)
             after = datetime.strptime(after, "%d/%m/%Y")
             transactions = transactions.filter(date__gte=after)
 
@@ -121,3 +125,18 @@ def add_new(request):
         
     return HttpResponseRedirect(reverse("index"))
 
+
+@login_required
+def stats(request):
+    cats = Categorie.objects.filter(user=request.user).values_list("name", flat=True)
+    totals = []
+    i = 0
+    for cat in cats:
+        i += 1
+        totals.append({"cat": cat,
+                    "amount": sum(Ledger.objects.filter(user=request.user, cat=cat).values_list("amount", flat=True))
+                    })
+
+    totals = [a for a in sorted(totals, key=lambda x: x["amount"])]
+    totals.reverse()
+    return JsonResponse(totals, safe=False)

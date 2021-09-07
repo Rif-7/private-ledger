@@ -6,7 +6,7 @@
     <head>
 
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -20,10 +20,12 @@
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">{{ user }}</a>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                  <a class="navbar-brand" href="#">{{ user }}</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link active" id="home-btn" href="#">Home</a>
                 </li>
                 <li class="nav-item">
                     {% if user.is_authenticated %}
@@ -35,6 +37,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="new-trans" href="#">New Transaction</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="stat-btn" href="#">Stats</a>
+              </li>
                 <li class="nav-item">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Sort
@@ -118,9 +123,23 @@
             </br>
             
           </form>
-            <input class="btn btn-primary form-btn form-data" form="trans-form" id="submit-btn" type="submit">
+            <input class="btn btn-primary form-btn form-data" value="Submit" form="trans-form" id="submit-btn" type="submit">
             <button class="btn btn-primary form-btn" id="cancel-btn">Cancel</button>
         </div>
+
+        <div id="container-secondary">
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Categorie</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody id="table-data1">
+
+            </tbody>
+          </table>
+
 
     </body>
 

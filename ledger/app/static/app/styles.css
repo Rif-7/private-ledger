@@ -42,6 +42,10 @@ body {
  
 }
 
+#container-secondary {
+  display: none;
+}
+
 p {
   color: white;
   margin-bottom: 3px;
